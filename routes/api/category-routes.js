@@ -1,6 +1,6 @@
 const router = require('express').Router();
 // const { canTreatArrayAsAnd } = require('sequelize/types/utils');
-const { Category, Product } = require('../../models');
+const { Category, Product, ProductTag } = require('../../models');
 
 // The `/api/categories` endpoint
 
@@ -52,7 +52,20 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body, {
+    where: {
+      id: req.params.id,
+    }
+    
+  })
 
+  .then((category) => {
+    // find all associated tags from Catog
+    return res.status(200).json(category)
+  })
+  .catch((err) => {
+    return res.status(400).json(err);}
+  )
   // const categoryData = await Category.
 });
 
